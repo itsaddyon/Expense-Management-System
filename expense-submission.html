@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Expense | Employee</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #007bff;
+            --success-color: #28a745;
+            --success-hover: #1e7e34;
+            --bg-light: #f4f7f9;
+            --card-bg: #ffffff;
+            --border-color: #e0e6ed;
+        }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-light); margin: 0; padding: 30px; }
+        .container { max-width: 1000px; margin: 0 auto; background: var(--card-bg); border-radius: 12px; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); display: flex; overflow: hidden; }
+        h1 { color: #333; margin-top: 0; margin-bottom: 25px; border-bottom: 3px solid var(--primary-color); padding-bottom: 10px; }
+        .back-link { color: var(--primary-color); text-decoration: none; display: block; margin-bottom: 20px; font-weight: 600; }
+
+        /* Left Column: Form Fields */
+        .form-column { flex: 2; padding: 40px; }
+        .input-group { margin-bottom: 20px; }
+        .input-group label { display: block; margin-bottom: 5px; font-weight: 600; color: #555; }
+        .input-group input, .input-group select, .input-group textarea {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            box-sizing: border-box;
+        }
+        .currency-input-row { display: flex; gap: 10px; }
+        .currency-input-row input { flex: 2; }
+        .currency-input-row select { flex: 1; }
+        textarea { resize: vertical; min-height: 80px; }
+
+        /* Right Column: OCR/Scan Area */
+        .scan-column { flex: 1; background-color: #f7f9fb; padding: 40px; border-left: 1px solid var(--border-color); text-align: center; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+        .ocr-box { border: 3px dashed var(--primary-color); border-radius: 10px; padding: 30px; width: 100%; background-color: #e9f0ff; cursor: pointer; transition: background-color 0.3s; }
+        .ocr-box:hover { background-color: #dbe4f6; }
+        .ocr-box p { color: var(--primary-color); font-weight: 600; margin: 10px 0 0; }
+        .scan-icon { font-size: 3em; color: var(--primary-color); }
+        .auto-fill-message { margin-top: 30px; padding: 15px; border-radius: 8px; background-color: var(--success-color); color: white; font-weight: 600; display: none; }
+        .submission-info { margin-top: 20px; font-size: 0.9em; color: #777; }
+
+        /* Action Button */
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background-color: var(--success-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 20px;
+        }
+        .submit-btn:hover { background-color: var(--success-hover); }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="form-column">
+        <a href="emplyeedash.html" class="back-link">&larr; Back to Dashboard</a>
+        <h1>Submit New Expense Claim</h1>
+        
+        <form id="expenseForm">
+            
+            <div class="input-group">
+                <label>Amount & Claim Currency</label>
+                <div class="currency-input-row">
+                    <input type="number" id="amount" placeholder="e.g., 55.75" required>
+                    <select id="currency" required>
+                        <option value="USD">USD - US Dollar</option>
+                        <option value="EUR">EUR - Euro</option>
+                        <option value="GBP">GBP - British Pound</option>
+                        <option value="JPY">JPY - Japanese Yen</option>
+                        <option value="INR">INR - Indian Rupee</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="input-group">
+                <label for="date">Expense Date</label>
+                <input type="date" id="date" required>
+            </div>
+
+            <div class="input-group">
+                <label for="category">Category</label>
+                <select id="category" required>
+                    <option value="">-- Select Category --</option>
+                    <option value="Meals">Meals</option>
+                    <option value="Travel">Travel</option>
+                    <option value="Office">Office Supplies</option>
+                    <option value="Client">Client Entertainment</option>
+                </select>
+            </div>
+            
+            <div class="input-group">
+                <label for="description">Description / Merchant Name</label>
+                <textarea id="description" placeholder="Lunch meeting with client, Flight to New York, etc." required></textarea>
+            </div>
+            
+            <button type="submit" class="submit-btn">Submit Expense for Approval</button>
+        </form>
+    </div>
+
+    <div class="scan-column">
+        <h2>OCR Auto-Fill Feature</h2>
+        <p>Save time! Scan a receipt to fill the form automatically.</p>
+        
+        <div class="ocr-box" onclick="simulateOCR()">
+            <span class="scan-icon">📸</span>
+            <p>Click to Simulate Scan/Upload Receipt</p>
+        </div>
+        
+        <div id="ocrMessage" class="auto-fill-message">
+            ✅ Success! Form fields auto-populated.
+        </div>
+
+        <div class="submission-info">
+            *Submitted claims are routed according to Admin-defined approval rules (Manager, Finance, etc.).
+        </div>
+    </div>
+</div>
+
+<script>
+    // --- OCR Simulation Logic ---
+    function simulateOCR() {
+        // Show success message
+        const messageDiv = document.getElementById('ocrMessage');
+        messageDiv.style.display = 'block';
+        
+        // Simulate a brief delay (loading)
+        setTimeout(() => {
+            // Auto-populate form fields
+            document.getElementById('amount').value = '55.75';
+            document.getElementById('currency').value = 'EUR';
+            document.getElementById('date').value = '2025-10-04';
+            document.getElementById('category').value = 'Meals';
+            document.getElementById('description').value = 'Cafe Milano lunch meeting, London.';
+            
+            // Hide message after a moment
+            setTimeout(() => {
+                messageDiv.style.display = 'none';
+            }, 3000);
+        }, 500);
+    }
+
+    // --- Form Submission Logic (Simulated) ---
+    document.getElementById('expenseForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        
+        // In a real app, this would send data to backend, handle currency conversion, etc.
+        alert('Expense Claim Submitted Successfully!\nIt is now pending approval from your manager (Jane Doe).');
+        
+        // Clear form after successful submission
+        this.reset();
+    });
+</script>
+</body>
+</html>

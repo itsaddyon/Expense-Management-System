@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Dashboard | Expense Management</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #007bff;
+            --success-color: #28a745;
+            --pending-color: #ffc107;
+            --bg-light: #f4f7f9;
+            --card-bg: #ffffff;
+            --sidebar-color: #2c3e50;
+        }
+        body { font-family: 'Inter', sans-serif; margin: 0; padding: 0; background-color: var(--bg-light); }
+        .dashboard-layout { display: flex; min-height: 100vh; }
+        .sidebar { width: 220px; background-color: var(--sidebar-color); color: white; padding: 20px 0; box-shadow: 2px 0 15px rgba(0, 0, 0, 0.2); }
+        .sidebar h3 { text-align: center; margin-bottom: 30px; color: var(--primary-color); font-size: 1.5em; }
+        .sidebar nav a { display: block; padding: 12px 20px; color: #ecf0f1; text-decoration: none; transition: background 0.3s, color 0.3s; border-left: 5px solid transparent; font-weight: 500; }
+        .sidebar nav a:hover, .sidebar nav a.active { background-color: #34495e; color: var(--primary-color); border-left-color: var(--primary-color); }
+        .main-content { flex-grow: 1; padding: 30px; }
+        h1 { color: #333; margin-top: 0; font-size: 2em; }
+        .card-dashboard { background: var(--card-bg); border-radius: 12px; padding: 25px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08); margin-bottom: 25px; }
+        .card-dashboard h4 { color: #333; font-weight: 700; margin-top: 0; margin-bottom: 15px; }
+        .submit-area { text-align: center; padding: 50px 30px; background-color: var(--card-bg); border-radius: 15px; margin-bottom: 30px; border: 3px dashed var(--primary-color); }
+        .submit-area h2 { color: var(--primary-color); margin-bottom: 10px; }
+        .submit-btn { background-color: var(--success-color); color: white; padding: 18px 40px; border: none; border-radius: 10px; font-size: 1.3em; font-weight: 700; cursor: pointer; transition: background-color 0.3s; margin-top: 20px; }
+        .submit-btn:hover { background-color: #1e7e34; }
+        .status-grid { display: flex; justify-content: space-around; text-align: center; margin-bottom: 20px; padding: 10px 0; border-bottom: 1px solid #eee; }
+        .status-item { font-weight: 600; padding: 5px 10px; border-radius: 5px; }
+        .status-pending { color: var(--pending-color); border: 1px solid var(--pending-color); }
+        .status-approved { color: var(--success-color); border: 1px solid var(--success-color); }
+        .status-inreview { color: var(--primary-color); border: 1px solid var(--primary-color); }
+        .history-item { display: grid; grid-template-columns: 3fr 1fr 1fr; padding: 12px 0; border-bottom: 1px solid #eee; align-items: center; }
+        .history-item:last-child { border-bottom: none; }
+        .history-item-header { font-weight: 700; color: #555; padding-bottom: 5px; }
+    </style>
+</head>
+<body>
+    <div class="dashboard-layout">
+        <div class="sidebar">
+            <h3>Employee Panel</h3>
+            <nav>
+                <a href="#" class="active">Dashboard</a>
+                <a href="expense-history.html">My Expense History</a>
+                <a href="#" onclick="alert('Settings page: User profile and preferences can be updated here. (Feature under development!)')">Settings</a>
+                <a href="loginpage.html">Logout</a>
+            </nav>
+        </div>
+        <div class="main-content">
+            <h1>Welcome, David!</h1>
+            
+            <div class="submit-area">
+                <h2 style="font-size: 2.5em;">Ready to Submit an Expense?</h2>
+                <p style="font-size: 1.1em; color: #555;">Save time with **OCR**! Just snap a photo of your receipt.</p>
+                <button class="submit-btn" onclick="window.location.href='expense-submission.html'">
+                    📸 Scan Receipt & Submit New Expense
+                </button>
+            </div>
+
+            <div class="card-dashboard">
+                <h4>Recent Submissions Status</h4>
+                
+                <div class="status-grid">
+                    <span class="status-item status-pending">PENDING: 3</span>
+                    <span class="status-item status-inreview">IN REVIEW: 1</span>
+                    <span class="status-item status-approved">APPROVED: 5</span>
+                </div>
+
+                <div class="history-item history-item-header">
+                    <span>Description / Date</span>
+                    <span>Amount (Submitted)</span>
+                    <span>Status</span>
+                </div>
+                <div class="history-item">
+                    <div>Team Lunch (USD)<small style="display: block; color: #777;">Oct 4, 2025</small></div>
+                    <span style="font-weight: 600;">$85.00</span>
+                    <span style="color: var(--primary-color); font-weight: 600;">Pending Manager</span>
+                </div>
+                <div class="history-item">
+                    <div>Flight to NYC (EUR)<small style="display: block; color: #777;">Sep 28, 2025</small></div>
+                    <span style="font-weight: 600;">€550.00</span>
+                    <span style="color: var(--success-color); font-weight: 600;">Approved</span>
+                </div>
+                
+                <a href="/expense-history" style="text-align: right; display: block; margin-top: 15px; color: var(--primary-color); text-decoration: none; font-weight: 600;">View Full History →</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

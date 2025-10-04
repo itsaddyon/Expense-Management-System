@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Review Expense | Manager</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #007bff;
+            --success-color: #28a745;
+            --danger-color: #dc3545;
+            --bg-light: #f4f7f9;
+            --card-bg: #ffffff;
+            --border-color: #e0e6ed;
+        }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-light); margin: 0; padding: 30px; }
+        .container { max-width: 1100px; margin: 0 auto; background: var(--card-bg); border-radius: 12px; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); padding: 30px; }
+        h1 { color: #333; margin-top: 0; border-bottom: 3px solid var(--primary-color); padding-bottom: 10px; margin-bottom: 25px; }
+        .back-link { color: var(--primary-color); text-decoration: none; display: block; margin-bottom: 20px; font-weight: 600; }
+        
+        .layout-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 30px; }
+        
+        /* Left Column: Details & Actions */
+        .details-column { padding-right: 20px; }
+        .section-card { border: 1px solid var(--border-color); border-radius: 8px; padding: 20px; margin-bottom: 25px; }
+        .section-card h3 { color: var(--primary-color); margin-top: 0; border-left: 3px solid var(--primary-color); padding-left: 10px; font-weight: 600; }
+        
+        .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
+        .info-item { padding: 10px; border-bottom: 1px solid #eee; }
+        .info-item label { display: block; font-size: 0.8em; color: #777; margin-bottom: 3px; }
+        .info-item strong { font-size: 1.1em; color: #333; }
+        
+        /* Financial Highlight */
+        .financial-highlight { background-color: #e9f0ff; padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 1px solid var(--primary-color); }
+        .converted-amount { font-size: 1.5em; font-weight: 700; color: var(--primary-color); }
+        
+        /* Decision Area */
+        .decision-area { margin-top: 30px; padding-top: 20px; border-top: 1px solid var(--border-color); }
+        .decision-area textarea { width: 100%; min-height: 100px; padding: 10px; border: 1px solid var(--border-color); border-radius: 6px; resize: vertical; margin-bottom: 15px; }
+        .action-buttons { display: flex; justify-content: flex-end; gap: 15px; }
+        
+        .action-btn { padding: 12px 25px; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; transition: background-color 0.3s; font-size: 1.1em; }
+        .btn-approve { background-color: var(--success-color); color: white; }
+        .btn-approve:hover { background-color: #1e7e34; }
+        .btn-reject { background-color: var(--danger-color); color: white; }
+        .btn-reject:hover { background-color: #c82333; }
+        
+        /* Right Column: Receipt/Workflow */
+        .sidebar-column { background-color: #f7f9fb; border-radius: 8px; padding: 20px; }
+        .receipt-preview img { max-width: 100%; height: auto; border-radius: 6px; border: 1px solid #ddd; margin-top: 10px; }
+        .workflow-status { margin-top: 20px; padding: 15px; background-color: #fff; border-radius: 6px; border-left: 5px solid var(--primary-color); }
+        .workflow-status p { margin: 0; font-weight: 600; color: #333; }
+        .workflow-status small { display: block; color: #777; margin-top: 5px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <a href="managerdash.html" class="back-link">&larr; Back to Approval Queue</a>
+    <h1>Review Expense Claim #985</h1>
+    
+    <div class="layout-grid">
+        
+        <div class="details-column">
+            
+            <div class="section-card">
+                <h3>Claim Summary</h3>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <label>Submitted By</label>
+                        <strong>Alice Johnson</strong>
+                    </div>
+                    <div class="info-item">
+                        <label>Submission Date</label>
+                        <strong>Oct 4, 2025</strong>
+                    </div>
+                    <div class="info-item">
+                        <label>Expense Date</label>
+                        <strong>Oct 3, 2025</strong>
+                    </div>
+                    <div class="info-item">
+                        <label>Category</label>
+                        <strong>Meals</strong>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section-card">
+                <h3>Financial Details</h3>
+                <div class="info-item">
+                    <label>Description / Merchant</label>
+                    <strong>Cafe Milano lunch meeting, London.</strong>
+                </div>
+                
+                <div class="financial-highlight">
+                    <label>Original Claim Amount</label>
+                    <strong>€55.75 EUR</strong>
+                    <hr style="border: 0; border-top: 1px dashed #a0c2f7; margin: 10px 0;">
+                    <label style="font-size: 0.9em;">Converted to Company Default Currency (USD)</label>
+                    <span class="converted-amount">$60.50 USD</span>
+                </div>
+            </div>
+            
+            <div class="decision-area">
+                <h3>Your Decision</h3>
+                <label for="comments">Add Comments (Required for rejection)</label>
+                <textarea id="comments" placeholder="Add optional comments for the employee or next approver..."></textarea>
+                
+                <div class="action-buttons">
+                    <button type="button" class="action-btn btn-reject" onclick="handleDecision('Rejected')">Reject</button>
+                    <button type="button" class="action-btn btn-approve" onclick="handleDecision('Approved')">Approve</button>
+                </div>
+            </div>
+
+        </div>
+        
+        <div class="sidebar-column">
+            
+            <div class="receipt-preview">
+                <h3>Receipt Preview</h3>
+                <img src="https://via.placeholder.com/300x400?text=Scanned+Receipt+Image" alt="Scanned Receipt">
+            </div>
+
+            <div class="workflow-status">
+                <p>Current Approval Step:</p>
+                <small>Step 1 of 3: Manager Approval (YOU)</small>
+                <small>Next: Finance Department</small>
+            </div>
+        </div>
+        
+    </div>
+</div>
+
+<script>
+    // --- Detailed Decision Handler ---
+    function handleDecision(decision) {
+        // Get Claim ID from URL or default to 985 (Chris Davis)
+        const urlParams = new URLSearchParams(window.location.search);
+        const claimId = urlParams.get('claim') || '985'; 
+        
+        const comments = document.getElementById('comments').value;
+        
+        if (decision === 'Rejected' && comments.trim() === '') {
+            alert('Comments are required when rejecting an expense.');
+            return;
+        }
+
+        if (decision === 'Approved') {
+            alert(`Expense #${claimId} Approved! It has been sent to the next approver.`);
+        } else {
+            alert(`Expense #${claimId} Rejected. The employee has been notified with your comments.`);
+        }
+
+        // Redirect back to the manager dashboard, passing the claim ID and status
+        window.location.href = `managerdash.html?reviewed_claim=${claimId}&status=${decision}`;
+    }
+</script>
+</body>
+</html>

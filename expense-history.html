@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Expense History | Employee</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #007bff;
+            --success-color: #28a745;
+            --danger-color: #dc3545;
+            --pending-color: #ffc107;
+            --bg-light: #f4f7f9;
+            --card-bg: #ffffff;
+            --sidebar-color: #2c3e50;
+        }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-light); margin: 0; padding: 0; }
+        .dashboard-layout { display: flex; min-height: 100vh; }
+        .sidebar { width: 220px; background-color: var(--sidebar-color); color: white; padding: 20px 0; box-shadow: 2px 0 15px rgba(0, 0, 0, 0.2); }
+        .sidebar h3 { text-align: center; margin-bottom: 30px; color: var(--primary-color); font-size: 1.5em; }
+        .sidebar nav a { display: block; padding: 12px 20px; color: #ecf0f1; text-decoration: none; transition: background 0.3s, color 0.3s; border-left: 5px solid transparent; font-weight: 500; }
+        .sidebar nav a:hover { background-color: #34495e; color: var(--primary-color); border-left-color: var(--primary-color); }
+        .main-content { flex-grow: 1; padding: 30px; }
+        h1 { color: #333; margin-top: 0; font-size: 2em; border-bottom: 3px solid var(--primary-color); padding-bottom: 10px; margin-bottom: 25px; }
+        
+        .card-dashboard { background: var(--card-bg); border-radius: 12px; padding: 25px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08); margin-bottom: 25px; }
+
+        /* History Table Styles */
+        .history-table { width: 100%; border-collapse: collapse; }
+        .history-table th, .history-table td { text-align: left; padding: 12px 15px; border-bottom: 1px solid #eee; }
+        .history-table th { background-color: #f7f9fb; font-weight: 700; color: #333; }
+        
+        .status-tag { padding: 4px 10px; border-radius: 4px; font-weight: 600; font-size: 0.8em; }
+        .status-approved { background-color: #d4edda; color: var(--success-color); }
+        .status-pending { background-color: #fff3cd; color: var(--pending-color); }
+        .status-rejected { background-color: #f8d7da; color: var(--danger-color); }
+        .status-in-review { background-color: #cfe2ff; color: var(--primary-color); }
+        .approval-path { font-size: 0.9em; color: #6c757d; }
+    </style>
+</head>
+<body>
+
+<div class="dashboard-layout">
+    <div class="sidebar">
+        <h3>Employee Panel</h3>
+        <nav>
+            <a href="emplyeedash.html">Dashboard</a>
+            <a href="#" class="active">My Expense History</a>
+            <a href="/settings">Settings</a>
+            <a href="loginpage.html">Logout</a>
+        </nav>
+    </div>
+    <div class="main-content">
+        <h1>My Expense History & Status Check</h1>
+        
+        <div class="card-dashboard">
+            <h4>All Submitted Claims</h4>
+            <table class="history-table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Category</th>
+                        <th>Description</th>
+                        <th>Amount (Submitted)</th>
+                        <th>Status</th>
+                        <th>Current Approver</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Oct 3, 2025</td>
+                        <td>Travel</td>
+                        <td>Flight to Dallas (USD)</td>
+                        <td>$450.00</td>
+                        <td><span class="status-tag status-approved">Approved</span></td>
+                        <td class="approval-path">— Finalized</td>
+                    </tr>
+                    <tr>
+                        <td>Oct 1, 2025</td>
+                        <td>Client Gift</td>
+                        <td>Dinner w/ Client (Past threshold)</td>
+                        <td>$180.00</td>
+                        <td><span class="status-tag status-rejected">Rejected</span></td>
+                        <td class="approval-path">Manager: Jane Doe (Rejected)</td>
+                    </tr>
+                    <tr>
+                        <td>Sep 28, 2025</td>
+                        <td>Meals</td>
+                        <td>Team Lunch (EUR)</td>
+                        <td>€65.00</td>
+                        <td><span class="status-tag status-pending">Pending</span></td>
+                        <td class="approval-path">Manager: Jane Doe</td>
+                    </tr>
+                    <tr>
+                        <td>Sep 15, 2025</td>
+                        <td>Software</td>
+                        <td>Annual License Renewal (USD)</td>
+                        <td>$999.00</td>
+                        <td><span class="status-tag status-in-review">In Review</span></td>
+                        <td class="approval-path">Finance Department</td>
+                    </tr>
+                    <tr>
+                        <td>Sep 10, 2025</td>
+                        <td>Office Supplies</td>
+                        <td>New Monitors</td>
+                        <td>$1,200.00</td>
+                        <td><span class="status-tag status-approved">Approved</span></td>
+                        <td class="approval-path">Approved by 60% Rule</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

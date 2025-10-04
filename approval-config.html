@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Approval Rule Configuration | Admin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #007bff;
+            --primary-hover: #0056b3;
+            --success-color: #28a745;
+            --bg-light: #f4f7f9;
+            --card-bg: #ffffff;
+            --border-color: #e0e6ed;
+            --shadow-light: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-light); margin: 0; padding: 20px; }
+        .container { max-width: 950px; margin: 0 auto; }
+        h1 { color: #333; margin-bottom: 25px; font-weight: 700; border-bottom: 3px solid var(--primary-color); padding-bottom: 5px; display: inline-block; }
+        .back-link { color: var(--primary-color); text-decoration: none; display: block; margin-bottom: 20px; font-weight: 600; }
+        .card { background: var(--card-bg); border-radius: 12px; padding: 30px; margin-bottom: 25px; box-shadow: var(--shadow-light); border: 1px solid var(--border-color); }
+        .card h2 { font-weight: 600; color: var(--primary-color); border-left: 4px solid var(--primary-color); padding-left: 15px; margin-top: 0; margin-bottom: 20px; }
+
+        /* Flow Builder Styles */
+        .switch-container { display: flex; align-items: center; margin-bottom: 20px; }
+        .switch { position: relative; display: inline-block; width: 60px; height: 34px; margin-right: 15px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 34px; }
+        input:checked + .slider { background-color: var(--success-color); }
+        .flow-container { display: flex; align-items: center; gap: 10px; overflow-x: auto; padding: 10px 0; border: 1px solid var(--border-color); border-radius: 8px; padding: 15px; }
+        .step-tile { background: var(--bg-light); border: 1px solid var(--primary-color); border-radius: 8px; padding: 10px 15px; min-width: 150px; text-align: center; }
+        .step-title { font-weight: 700; color: var(--primary-color); margin: 0; }
+        .step-remove { color: #dc3545; cursor: pointer; float: right; margin-top: -5px; }
+        .flow-arrow { font-size: 1.5em; color: #999; }
+        .add-step-btn { background: none; border: 1px dashed var(--primary-color); color: var(--primary-color); border-radius: 8px; padding: 15px; cursor: pointer; font-weight: 600; }
+        .role-selector { padding: 5px; border-radius: 4px; border: 1px solid #ccc; }
+
+        /* Conditional Rules Styles */
+        .conditional-rules-content { padding-top: 15px; }
+        .rule-group { border: 1px solid var(--border-color); border-radius: 8px; padding: 20px; margin-bottom: 20px; background-color: #fcfcfc; }
+        .form-row { display: flex; align-items: center; margin-bottom: 15px; gap: 10px; }
+        .form-row label { font-weight: 600; color: #555; min-width: 120px; }
+        input[type="number"], select { padding: 8px; border: 1px solid var(--border-color); border-radius: 6px; flex-grow: 1; }
+        .logic-operator { font-weight: 700; color: #d9534f; padding: 5px 15px; border: 2px solid #d9534f; border-radius: 5px; cursor: pointer; transition: background 0.2s; }
+        .logic-operator.and { color: var(--primary-color); border-color: var(--primary-color); }
+
+        /* Action Buttons */
+        .actions { text-align: right; padding-top: 20px; }
+        .actions button { padding: 12px 25px; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; transition: background 0.3s; }
+        .btn-save { background-color: var(--success-color); color: white; margin-left: 15px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <a href="admindash.html" class="back-link">&larr; Back to Admin Dashboard</a>
+    <h1>Approval Rule Configuration</h1>
+    
+    <form id="approvalConfigForm">
+        
+        <div class="card">
+            <h2>1. Sequential Flow Builder (Multi-Level)</h2>
+            
+            <div class="switch-container">
+                <label class="switch">
+                    <input type="checkbox" id="managerFirstCheck" checked>
+                    <span class="slider"></span>
+                </label>
+                <span class="switch-label">Manager must approve first? (Step 1)</span>
+            </div>
+            
+            <p style="margin-bottom: 15px;">Define custom steps (Finance, Director, etc.):</p>
+            <div class="flow-container" id="sequentialFlow">
+                </div>
+            <button type="button" class="add-step-btn" onclick="addStep()">+ Add Approval Step</button>
+        </div>
+
+        <div class="card">
+            <h2>2. Conditional Approval Rules (Flexible Rules)</h2>
+            
+            <div class="switch-container">
+                <label class="switch">
+                    <input type="checkbox" id="enableConditional" onchange="toggleConditionalContent()">
+                    <span class="slider"></span>
+                </label>
+                <span class="switch-label">Enable Advanced Conditional Logic (Percentage/Specific Approver)</span>
+            </div>
+            
+            <div id="conditionalContent" class="conditional-rules-content">
+                
+                <div class="rule-group">
+                    <h3>Percentage Rule (e.g., If 60% of Approvers Agree)</h3>
+                    <div class="form-row">
+                        <label>Threshold:</label>
+                        <input type="number" id="percentageInput" min="0" max="100" value="60" style="width: 80px;">
+                        <span>% of Approvers</span>
+                    </div>
+                </div>
+                
+                <div style="text-align: center; margin: 15px 0;">
+                    <span id="logicOperator" class="logic-operator" onclick="toggleLogicOperator()">OR</span>
+                    <p style="font-size: 0.8em; color: #777;">Determines how the Percentage and Specific rules combine (Hybrid Rule)</p>
+                </div>
+
+                <div class="rule-group">
+                     <h3>Specific Approver Rule (e.g., If CFO Approves)</h3>
+                     <div class="form-row">
+                        <label>Required Approver:</label>
+                        <select id="specificApproverSelect">
+                            <option value="">-- Select Specific Approver (e.g., CFO) --</option>
+                            <option value="105">Jane Doe (CFO)</option>
+                            <option value="106">Mark Lee (Director)</option>
+                        </select>
+                     </div>
+                </div>
+
+                <p style="color: #666; font-style: italic;">*Rule Example: Approved if (60% threshold met) **OR** (CFO approves).</p>
+            </div>
+        </div>
+        
+        <div class="actions">
+            <button type="submit" class="action-btn btn-save">Save Approval Configuration</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    // --- Global State and Initialization ---
+    let sequentialSteps = [
+        { type: 'Role', value: 'Finance' },
+        { type: 'User', value: 'Director' }
+    ];
+    
+    const approverRoles = ['Finance', 'HR', 'Director', 'Legal'];
+
+    document.addEventListener('DOMContentLoaded', () => {
+        renderSequentialFlow();
+        toggleConditionalContent(); // Initialize disabled state
+    });
+
+    // --- Sequential Flow Logic ---
+    
+    function renderSequentialFlow() {
+        const flowContainer = document.getElementById('sequentialFlow');
+        flowContainer.innerHTML = '';
+        
+        // Always render the Manager if checked, visually
+        if (document.getElementById('managerFirstCheck').checked) {
+             flowContainer.innerHTML += `
+                <div class="step-tile">
+                    <div class="step-title">Manager (Default)</div>
+                    <small>Step 1</small>
+                </div>
+                <span class="flow-arrow">&#8594;</span>
+            `;
+        }
+
+        sequentialSteps.forEach((step, index) => {
+            const stepHtml = `
+                <div class="step-tile" data-index="${index}">
+                    <span class="step-remove" onclick="removeStep(${index})">&times;</span>
+                    <div class="step-title">${step.value}</div>
+                    <small>Step ${index + 2}</small>
+                </div>
+            `;
+            flowContainer.innerHTML += stepHtml;
+            
+            if (index < sequentialSteps.length - 1) {
+                flowContainer.innerHTML += `<span class="flow-arrow">&#8594;</span>`;
+            }
+        });
+    }
+
+    function addStep() {
+        const newStepType = prompt("Enter the new approval role (e.g., Finance, Director):", "New Approver");
+        if (newStepType) {
+            sequentialSteps.push({ type: 'Role', value: newStepType.trim() });
+            renderSequentialFlow();
+        }
+    }
+
+    function removeStep(index) {
+        if (confirm(`Are you sure you want to remove ${sequentialSteps[index].value}?`)) {
+            sequentialSteps.splice(index, 1);
+            renderSequentialFlow();
+        }
+    }
+    
+    document.getElementById('managerFirstCheck').addEventListener('change', renderSequentialFlow);
+
+    // --- Conditional Flow Logic ---
+
+    function toggleConditionalContent() {
+        const checkbox = document.getElementById('enableConditional');
+        const content = document.getElementById('conditionalContent');
+        
+        // Simple toggle to visually enable/disable the section
+        content.style.opacity = checkbox.checked ? '1' : '0.5';
+        content.style.pointerEvents = checkbox.checked ? 'auto' : 'none';
+    }
+
+    function toggleLogicOperator() {
+        const operator = document.getElementById('logicOperator');
+        
+        if (operator.textContent === 'OR') {
+            operator.textContent = 'AND';
+            operator.classList.add('and');
+        } else {
+            operator.textContent = 'OR';
+            operator.classList.remove('and');
+        }
+    }
+
+    // --- Final Submission Logic ---
+
+    document.getElementById('approvalConfigForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        
+        const isManagerFirst = document.getElementById('managerFirstCheck').checked;
+        const isConditionalEnabled = document.getElementById('enableConditional').checked;
+        const percentage = document.getElementById('percentageInput').value;
+        const specificApprover = document.getElementById('specificApproverSelect').value;
+        const logicOperator = document.getElementById('logicOperator').textContent;
+
+        let summary = "✅ **Approval Configuration Saved**\n\n";
+        
+        summary += "--- SEQUENTIAL FLOW ---\n";
+        summary += `Manager is Step 1: ${isManagerFirst ? 'Yes' : 'No'}\n`;
+        summary += `Custom Steps: ${sequentialSteps.map(s => s.value).join(' -> ') || 'None'}\n\n`;
+
+        summary += "--- CONDITIONAL RULES ---\n";
+        if (isConditionalEnabled) {
+            summary += `Enabled: Yes\n`;
+            summary += `Rule 1 (Percentage): ${percentage}%\n`;
+            summary += `Rule 2 (Specific Approver): ${specificApprover ? document.getElementById('specificApproverSelect').options[document.getElementById('specificApproverSelect').selectedIndex].text : 'None'}\n`;
+            
+            if (specificApprover) {
+                summary += `Hybrid Logic: Rule 1 **${logicOperator}** Rule 2\n`;
+            }
+        } else {
+            summary += `Enabled: No (Only sequential flow applies)\n`;
+        }
+
+        alert(summary);
+    });
+</script>
+</body>
+</html>

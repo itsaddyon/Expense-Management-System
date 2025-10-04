@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Expense Management</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #007bff;
+            --primary-hover: #0056b3;
+            --bg-light: #f4f7f9;
+            --card-bg: #ffffff;
+            --border-color: #e0e6ed;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: var(--bg-light);
+        }
+        .login-container {
+            display: flex;
+            width: 800px;
+            max-width: 90%;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        .login-form-area {
+            flex: 1;
+            padding: 40px;
+            background-color: var(--card-bg);
+        }
+        .login-graphic-area {
+            flex: 1;
+            background: linear-gradient(135deg, var(--primary-color), #00c6ff);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+            padding: 40px;
+        }
+        .login-graphic-area h2 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+        .login-form-area h2 {
+            color: #333;
+            margin-bottom: 30px;
+            font-weight: 700;
+        }
+        .input-group {
+            margin-bottom: 20px;
+        }
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            box-sizing: border-box;
+            transition: border-color 0.3s;
+        }
+        .input-group input:focus {
+            border-color: var(--primary-color);
+            outline: none;
+        }
+        .login-btn {
+            width: 100%;
+            padding: 15px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .login-btn:hover {
+            background-color: var(--primary-hover);
+        }
+        .signup-link {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.9em;
+        }
+        .signup-link a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .error-message {
+            color: #dc3545;
+            text-align: center;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-form-area">
+            <h2 style="color: var(--primary-color);">Odoo Expense</h2>
+            <h2>Sign In</h2>
+            
+            <div id="errorMessage" class="error-message" style="display: none;"></div>
+
+            <form id="loginForm">
+                <div class="input-group">
+                    <label for="userid">Username</label>
+                    <input type="userid" id="userid" name="userid" placeholder="Try: admin, manager, or employee" required>
+                </div>
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Password (Use 'password')" required>
+                </div>
+                <button type="submit" class="login-btn">Sign In</button>
+            </form>
+            <div class="signup-link">
+                First time here? <a href="/signup">Sign Up and Setup Company</a>
+            </div>
+        </div>
+
+        <div class="login-graphic-area">
+            <div>
+                <h2>Expense Management, Simplified.</h2>
+                <p>Define flexible multi-level approvals and automate submissions with OCR.</p>
+                <p style="margin-top: 30px;">"The foundation for transparent finances."</p>
+            </div>
+        </div>
+    </div>
+
+<script>
+    // --- SIMULATED BACKEND AUTHENTICATION AND REDIRECTION ---
+    document.getElementById('loginForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const email = document.getElementById('userid').value.toLowerCase();
+        const password = document.getElementById('password').value;
+        const errorMessageDiv = document.getElementById('errorMessage');
+
+        errorMessageDiv.style.display = 'none';
+        errorMessageDiv.textContent = '';
+
+        // Mapped to your local file names
+        const roleMapping = {
+            'admin': 'admindash.html', 
+            'manager': 'managerdash.html',
+            'employee': 'emplyeedash.html'
+        };
+
+        const targetUrl = roleMapping[email];
+        
+        if (targetUrl && password === 'password') {
+            window.location.href = targetUrl;
+        } else if (targetUrl && password !== 'password') {
+            errorMessageDiv.textContent = 'Incorrect password. Please try "password".';
+            errorMessageDiv.style.display = 'block';
+        } else {
+            errorMessageDiv.textContent = 'User not found. Try one of the demo usernames';
+            errorMessageDiv.style.display = 'block';
+        }
+    });
+</script>
+</body>
+</html>

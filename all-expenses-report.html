@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Expenses Report | Admin Oversight</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #007bff;
+            --success-color: #28a745;
+            --danger-color: #dc3545;
+            --warning-color: #ffc107;
+            --info-color: #17a2b8;
+            --bg-light: #f4f7f9;
+            --card-bg: #ffffff;
+            --border-color: #e0e6ed;
+        }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-light); margin: 0; padding: 30px; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        h1 { color: #333; margin-top: 0; border-bottom: 3px solid var(--primary-color); padding-bottom: 10px; margin-bottom: 25px; display: inline-block; }
+        .back-link { color: var(--primary-color); text-decoration: none; display: block; margin-bottom: 20px; font-weight: 600; }
+        
+        .report-grid { 
+            display: grid; 
+            grid-template-columns: repeat(2, 1fr); 
+            gap: 30px; 
+            margin-top: 20px;
+        }
+        .card-report { 
+            background: var(--card-bg); 
+            border-radius: 12px; 
+            padding: 30px; 
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08); 
+            min-height: 450px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .card-report h2 { 
+            color: var(--primary-color); 
+            margin-top: 0; 
+            margin-bottom: 20px; 
+            font-size: 1.5em;
+        }
+
+        /* Chart Simulation Styles */
+        .chart-container { 
+            width: 250px; 
+            height: 250px; 
+            border-radius: 50%; 
+            position: relative; 
+            background: conic-gradient(
+                var(--success-color) 0 45%,      /* Approved 45% */
+                var(--warning-color) 45% 65%,     /* Pending 20% */
+                var(--danger-color) 65% 80%,      /* Rejected 15% */
+                var(--info-color) 80% 100%        /* In Review 20% */
+            );
+            margin-bottom: 30px;
+        }
+        .chart-legend { 
+            list-style: none; 
+            padding: 0; 
+            width: 100%;
+        }
+        .chart-legend li { 
+            display: flex; 
+            justify-content: space-between; 
+            padding: 8px 0; 
+            border-bottom: 1px dashed #eee;
+            font-weight: 600;
+        }
+        .legend-color { 
+            width: 12px; 
+            height: 12px; 
+            border-radius: 3px; 
+            margin-right: 10px;
+            display: inline-block;
+        }
+
+        /* Category Chart Specifics */
+        .category-chart {
+            background: conic-gradient(
+                #3498db 0 30%,      /* Travel 30% */
+                #2ecc71 30% 55%,     /* Meals 25% */
+                #f1c40f 55% 75%,      /* Software 20% */
+                #e74c3c 75% 100%      /* Other 25% */
+            );
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <a href="admindash.html" class="back-link">&larr; Back to Admin Dashboard</a>
+    <h1>Company-Wide Expense Reports (Admin Override)</h1>
+    
+    <div class="report-grid">
+        
+        <div class="card-report">
+            <h2>Total Expenses by Approval Status</h2>
+            <div class="chart-container">
+                </div>
+            <ul class="chart-legend">
+                <li>
+                    <span style="color: var(--success-color);"><span class="legend-color" style="background-color: var(--success-color);"></span>Approved</span> 
+                    <span>45% ($52,000)</span>
+                </li>
+                <li>
+                    <span style="color: var(--warning-color);"><span class="legend-color" style="background-color: var(--warning-color);"></span>Pending (Manager)</span> 
+                    <span>20% ($23,000)</span>
+                </li>
+                 <li>
+                    <span style="color: var(--info-color);"><span class="legend-color" style="background-color: var(--info-color);"></span>In Review (Finance/Director)</span> 
+                    <span>20% ($23,000)</span>
+                </li>
+                <li>
+                    <span style="color: var(--danger-color);"><span class="legend-color" style="background-color: var(--danger-color);"></span>Rejected</span> 
+                    <span>15% ($17,000)</span>
+                </li>
+            </ul>
+        </div>
+        
+        <div class="card-report">
+            <h2>Total Expenses by Category</h2>
+            <div class="chart-container category-chart">
+                </div>
+            <ul class="chart-legend">
+                <li>
+                    <span style="color: #3498db;"><span class="legend-color" style="background-color: #3498db;"></span>Travel</span> 
+                    <span>30%</span>
+                </li>
+                <li>
+                    <span style="color: #2ecc71;"><span class="legend-color" style="background-color: #2ecc71;"></span>Meals/Entertainment</span> 
+                    <span>25%</span>
+                </li>
+                 <li>
+                    <span style="color: #f1c40f;"><span class="legend-color" style="background-color: #f1c40f;"></span>Software/IT</span> 
+                    <span>20%</span>
+                </li>
+                <li>
+                    <span style="color: #e74c3c;"><span class="legend-color" style="background-color: #e74c3c;"></span>Other/Office Supplies</span> 
+                    <span>25%</span>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>
