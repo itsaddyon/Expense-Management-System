@@ -1,9 +1,9 @@
 <<<<<<< HEAD
 # Odoo x Amalthea Hackathon 2025: Intelligent Expense Management System
 
-### Project Title (Developed by Team Codex)
+### Project Title 
 
-**Odoo x Amalthea Hackathon 2025: Intelligent Expense Management System**
+**Odoo x Amalthea Hackathon 2025: Intelligent Expense Management System (Developed by Team Codex)**
 
 ### Problem Solved
 
@@ -51,4 +51,5 @@ To reset the Manager's approval queue for a fresh demonstration run:
 * Log in as **Admin** or **Manager**, and click the **"Reset Demo State"** button. This clears the approval history in Local Storage.
 =======
 # Expense-Management-System
+
 
