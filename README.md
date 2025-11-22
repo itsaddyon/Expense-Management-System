@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 # Odoo x Amalthea Hackathon 2025: Intelligent Expense Management System
 
 ### Project Title 
@@ -40,7 +40,7 @@ To experience the full role-based workflow, please open **`loginpage.html`** and
 **Start Time:** 8:00 AM, 4th October 2025
 **Coding End Time:** 5:00 PM
 
-1.  **Clone Repository:** (Ensure frequent pushes were made before 5:00 PM)
+1.  **Clone Repository:** 
 2.  **Open Index:** Open the **`loginpage.html`** file directly in any modern web browser (e.g., Chrome, Edge).
 3.  **No Server Required:** The entire application runs using HTML, CSS, and **JavaScript** for state management (Local Storage). No local server (`backend.py`) or database (`integration.sql`) is required. This demonstrates planning for offline or local solutions.
 
@@ -49,7 +49,6 @@ To experience the full role-based workflow, please open **`loginpage.html`** and
 To reset the Manager's approval queue for a fresh demonstration run:
 
 * Log in as **Admin** or **Manager**, and click the **"Reset Demo State"** button. This clears the approval history in Local Storage.
-=======
-# Expense-Management-System
+
 
 
