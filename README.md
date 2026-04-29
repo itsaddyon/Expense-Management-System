@@ -50,5 +50,10 @@ To reset the Manager's approval queue for a fresh demonstration run:
 
 * Log in as **Admin** or **Manager**, and click the **"Reset Demo State"** button. This clears the approval history in Local Storage.
 
+### Contributors
+**Team Grey Hats**
+**Lead - Adarsh Arya**
+Build for People
+
 
 
